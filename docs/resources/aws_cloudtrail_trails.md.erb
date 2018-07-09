@@ -7,11 +7,25 @@ platform: aws
 
 Use the `aws_cloudtrail_trails` InSpec audit resource to test properties of some or all AWS CloudTrail Trails.
 
-AWS CloudTrail is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account. With CloudTrail, you can log, continuously monitor, and retain account activity related to actions across your AWS infrastructure. CloudTrail provides event history of your AWS account activity, including actions taken through the AWS Management Console, AWS SDKs, command line tools, and other AWS services. This event history simplifies security analysis, resource change tracking, and troubleshooting.
+AWS CloudTrail is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS
+account. With CloudTrail, you can log, continuously monitor, and retain account activity related to actions across your
+AWS infrastructure. CloudTrail provides event history of your AWS account activity, including actions taken through the
+AWS Management Console, AWS SDKs, command line tools, and other AWS services. This event history simplifies security
+analysis, resource change tracking, and troubleshooting.
 
 Each AWS CloudTrail Trails is uniquely identified by its trail name or trail arn.
 
 <br>
+
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
 
 ## Syntax
 
@@ -33,7 +47,8 @@ As this is the initial release of `aws_cloudtrail_trails`, its limited functiona
 <br>
 
 ## Properties
-* `entries`, `names`, `trail_arns`
+
+  - `entries`, `names`, `trail_arns`
 
 <br>
 
@@ -68,7 +83,8 @@ Provides a list of trail arns for all CloudTrail Trails in the AWS account.
 
 ## Matchers
 
-This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our [matchers page](https://www.inspec.io/docs/reference/matchers/).
+This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our
+[matchers page](https://www.inspec.io/docs/reference/matchers/).
 
 ### exists
 
@@ -81,6 +97,8 @@ The control will pass if the filter returns at least one result. Use `should_not
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `cloudtrail:DescribeTrails` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `cloudtrail:DescribeTrails` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for AWS CloudTrail](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awscloudtrail.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for AWS
+CloudTrail](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_awscloudtrail.html).

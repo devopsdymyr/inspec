@@ -5,11 +5,23 @@ platform: linux
 
 # firewalld
 
-Use the `firewalld` InSpec audit resource to test that firewalld is configured to allow and deny access to specific hosts, services and ports on a system.
+Use the `firewalld` InSpec audit resource to test that firewalld is configured to allow and deny access to specific
+hosts, services and ports on a system.
 
-A firewalld has a number of zones that can be configured to allow and deny access to specific hosts, services, and ports.
+A firewalld has a number of zones that can be configured to allow and deny access to specific hosts, services, and
+ports.
 
 <br>
+
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v1.40.0 of InSpec.
 
 ## Syntax
 
@@ -56,7 +68,7 @@ The `services` property is used in conjunction with the where class to display o
       its('services') { should cmp ['ssh', 'icmp'] }
     end
 
-### default_zone
+### default\_zone
 
 The `default_zone` property displays the default active zone to be used.
 
@@ -104,4 +116,5 @@ The `be_running` matcher tests if the firewalld service is running:
 
     it { should have_rule_enabled('family=ipv4 source address=192.168.0.14 accept', 'public') }
 
-It is not necessary to add the "rule" string, and you can start with the optional flags that are used in firewalld and end with the action
+It is not necessary to add the "rule" string, and you can start with the optional flags that are used in firewalld and
+end with the action

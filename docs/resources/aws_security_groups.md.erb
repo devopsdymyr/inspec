@@ -7,13 +7,26 @@ platform: aws
 
 Use the `aws_security_groups` InSpec audit resource to test properties of some or all security groups.
 
-Security groups are a networking construct that contain ingress and egress rules for network communications. Security groups may be attached to EC2 instances, as well as certain other AWS resources. Along with Network Access Control Lists, Security Groups are one of the two main mechanisms of enforcing network-level security.
+Security groups are a networking construct that contain ingress and egress rules for network communications. Security
+groups may be attached to EC2 instances, as well as certain other AWS resources. Along with Network Access Control
+Lists, Security Groups are one of the two main mechanisms of enforcing network-level security.
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
+
 ## Syntax
 
-An `aws_security_groups` resource block uses an optional filter to select a group of security groups and then tests that group.
+An `aws_security_groups` resource block uses an optional filter to select a group of security groups and then tests that
+group.
 
     # Verify you have more than the default security group
     describe aws_security_groups do
@@ -43,7 +56,8 @@ A string identifying the VPC which contains the security group.
 
 ### group\_name
 
-A string identifying a group. Since groups are contained in VPCs, group names are unique within the AWS account, but not across VPCs.
+A string identifying a group. Since groups are contained in VPCs, group names are unique within the AWS account, but not
+across VPCs.
 
     # Examine the default security group in all VPCs
     describe aws_security_groups.where( group_name: 'default') do
@@ -54,7 +68,7 @@ A string identifying a group. Since groups are contained in VPCs, group names ar
 
 ## Properties
 
-* `entries`, `group_ids`
+  - `entries`, `group_ids`
 
 <br>
 
@@ -79,7 +93,8 @@ Provides a list of all security group IDs matched.
 
 ## Matchers
 
-This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our [matchers page](https://www.inspec.io/docs/reference/matchers/).
+This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our
+[matchers page](https://www.inspec.io/docs/reference/matchers/).
 
 ### exists
 
@@ -92,6 +107,8 @@ The control will pass if the filter returns at least one result. Use `should_not
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `ec2:DescribeSecurityGroups` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `ec2:DescribeSecurityGroups` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon
+EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html).

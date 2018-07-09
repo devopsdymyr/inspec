@@ -5,11 +5,22 @@ platform: aws
 
 # aws\_elb
 
-Use the `aws_elb` InSpec audit resource to test properties of a single AWS Elastic Load Balancer (ELB, also known as a Classic Load Balancer).
+Use the `aws_elb` InSpec audit resource to test properties of a single AWS Elastic Load Balancer (ELB, also known as a
+Classic Load Balancer).
 
 To audit ELBs in bulk or to search, use `aws_elbs` (plural).
 
 <br>
+
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.2.10 of InSpec.
 
 ## Resource Parameters
 
@@ -18,7 +29,7 @@ An `aws_elb` resource block declares the tests for a single AWS ELB by ELB name.
     describe aws_elb('my-elb') do
       it { should exist }
     end
-
+    
     describe aws_elb(elb_name: 'my-elb') do
       its('instance_ids.count') { should cmp 2 }
     end
@@ -57,7 +68,7 @@ Returns an array of strings identifying which availability zones in which the lo
 
 ### dns\_name
 
-Returns the FQDN of the load balancer.  This is the hostname which is exposed to the world.
+Returns the FQDN of the load balancer. This is the hostname which is exposed to the world.
 
     # Ensure that the ELB has a DNS name
     describe aws_elb('web-elb') do
@@ -75,7 +86,8 @@ The name of the ELB within AWS. The ELB name is unique within the region.
 
 ### external\_ports
 
-Returns an array of integers reflecting the public-facing ports on which the load balancer will be listening for traffic.
+Returns an array of integers reflecting the public-facing ports on which the load balancer will be listening for
+traffic.
 
     # Ensure that we are listening on port 80 and nothing else
     describe aws_elb('web-elb') do
@@ -91,7 +103,6 @@ Returns an array of strings reflecting the instance IDs of the EC2 instances att
     describe aws_elb('web-elb') do
       its('instance_ids') { should include 'i-12345678' }
     end
-
 
 ### internal\_ports
 
@@ -134,11 +145,13 @@ Returns a String reflecting the ID of the VPC in which the ELB is located.
 
 ## Matchers
 
-This InSpec audit resource has no special matchers. For a full list of available matchers, please visit our [Universal Matchers page](https://www.inspec.io/docs/reference/matchers/).
-
+This InSpec audit resource has no special matchers. For a full list of available matchers, please visit our [Universal
+Matchers page](https://www.inspec.io/docs/reference/matchers/).
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `elasticloadbalancing:DescribeLoadBalancers` action set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `elasticloadbalancing:DescribeLoadBalancers` action set to Allow.
 
-You can find detailed documentation at [Authentication and Access Control for Your Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-authentication-access-control.html)
+You can find detailed documentation at [Authentication and Access Control for Your Load
+Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-authentication-access-control.html)

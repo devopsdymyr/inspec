@@ -13,16 +13,27 @@ To test properties of the special AWS root user (which owns the account), use th
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
+
 ## Syntax
 
-An `aws_iam_users` resource block uses a filter to select a group of users and then tests that group. With no filter, it returns all AWS IAM users.
+An `aws_iam_users` resource block uses a filter to select a group of users and then tests that group. With no filter, it
+returns all AWS IAM users.
 
     # No filter
     # We expect 42 users
     describe aws_iam_users do
       its('usernames.count') { should eq 42 }
     end
-
+    
     # Using a filter
     # All users should have MFA (no user without MFA should exist)
     describe aws_iam_users.where(has_mfa_enabled?: false) do
@@ -50,7 +61,7 @@ The following examples show how to use this InSpec audit resource.
     console_users_without_mfa = aws_iam_users
                                 .where(has_console_password?: true)
                                 .where(has_mfa_enabled?: false)
-
+    
     describe console_users_without_mfa do
       it { should_not exist }
     end
@@ -60,7 +71,7 @@ The following examples show how to use this InSpec audit resource.
     console_users_with_unused_password = aws_iam_users
                                          .where(has_console_password?: true)
                                          .where(password_never_used?: true)
-
+    
     describe console_users_with_unused_password do
       it { should_not exist }
     end
@@ -70,11 +81,10 @@ The following examples show how to use this InSpec audit resource.
     console_users_with_used_password = aws_iam_users
                                        .where(has_console_password?: true)
                                        .where(password_ever_used?: true)
-
+    
     describe console_users_with_used_password do
       it { should exist }
     end
-
 
 ### Test that users with passwords that have not been used for 90 days do not
 
@@ -99,7 +109,8 @@ True or false. Filters the users to include only those that have at least one IA
 
 ### has\_console\_password
 
-True or false. Filters the users to include only those that have a console password (that is, they are able to login to the AWS web UI using a password).
+True or false. Filters the users to include only those that have a console password (that is, they are able to login to
+the AWS web UI using a password).
 
     # No console passwords for anyone
     describe aws_iam_users.where(has_console_password: true) do
@@ -108,7 +119,8 @@ True or false. Filters the users to include only those that have a console passw
 
 ### has\_inline\_policies
 
-True or false. Filters the users to include only those that have at least one IAM policy directly embedded in the user record.
+True or false. Filters the users to include only those that have at least one IAM policy directly embedded in the user
+record.
 
     # Embedding policies is usually hard to manage
     describe aws_iam_users.where(has_inline_policies: true) do
@@ -117,7 +129,8 @@ True or false. Filters the users to include only those that have at least one IA
 
 ### has\_mfa\_enabled
 
-True or false. Filters the users to include only those that have some kind of Mult-Factor Authentication enabled (virtual or hardware).
+True or false. Filters the users to include only those that have some kind of Mult-Factor Authentication enabled
+(virtual or hardware).
 
     # Require MFA for everyone
     describe aws_iam_users.where(has_mfa_enabled: false) do
@@ -133,7 +146,7 @@ True or false. Filters the users to include only those that have used their pass
       it { should exist }
     end
 
-### password\_last\_used_days\_ago
+### password\_last\_used\_days\_ago
 
 Integer. Filters the users to include only those who used their password a certain number of days ago. '0' means today.
 
@@ -141,7 +154,7 @@ Integer. Filters the users to include only those who used their password a certa
     describe aws_iam_users.where(password_ever_used: true, password_last_used_days_ago:0) do
       its('usernames') { should include 'bob' }
     end
-
+    
     # This filter is often more useful in block mode, using a greater-than
     # Here, audit users who have not logged in in the last 30 days
     describe aws_iam_users.where do
@@ -152,7 +165,7 @@ Integer. Filters the users to include only those who used their password a certa
 
 ### password\_never\_used
 
-True or false. Filters the users to include only those that have used _never_ their password.
+True or false. Filters the users to include only those that have used *never* their password.
 
     # No zombie accounts!
     describe aws_iam_users.where(password_never_used: true) do
@@ -168,7 +181,7 @@ String. Filters the users to include only those whose username matches the value
     describe aws_iam_users.where { username.start_with?('service') } do
       it { should_not have_console_password }
     end
-
+    
     # Method call example. This is a poor use of aws_iam_users (plural);
     # if you want to audit an individual user whose username you know, use
     # aws_iam_user (singular)
@@ -179,11 +192,14 @@ String. Filters the users to include only those whose username matches the value
 
 ## Properties
 
-Properties are used with the `its` test to obtain information about the matched users. Properties always return arrays, though they may be empty.
+Properties are used with the `its` test to obtain information about the matched users. Properties always return arrays,
+though they may be empty.
 
 ### attached\_policy\_arns
 
-Array of strings. Each entry is the ARN of an IAM managed policy that is attached to at least one matched user. The list is de-duplicated, so if you have five users that are all attached to the same policy, `attached_policy_arns` will return only one ARN, not five.
+Array of strings. Each entry is the ARN of an IAM managed policy that is attached to at least one matched user. The list
+is de-duplicated, so if you have five users that are all attached to the same policy, `attached_policy_arns` will return
+only one ARN, not five.
 
     # Service users should be attached to a custom service policy
     describe aws_iam_users.where { username.start_with?('service') } do
@@ -192,7 +208,9 @@ Array of strings. Each entry is the ARN of an IAM managed policy that is attache
 
 ### attached\_policy\_names
 
-Array of strings. Each entry is the friendly name of an IAM managed policy that is attached to at least one matched user. The list is de-duplicated, so if you have five users that are all attached to the same policy, `attached_policy_names` will return only one name, not five.
+Array of strings. Each entry is the friendly name of an IAM managed policy that is attached to at least one matched
+user. The list is de-duplicated, so if you have five users that are all attached to the same policy,
+`attached_policy_names` will return only one name, not five.
 
     # Service users should be attached to a custom service policy
     # and not include Admin policy!
@@ -203,7 +221,10 @@ Array of strings. Each entry is the friendly name of an IAM managed policy that 
 
 ### inline\_policy\_names
 
-Array of strings. Each entry is the name of an embedded policy that is embedded in at least one matched user. Keep in mind that each user has a copy of a policy (which can then be modified). This means that two users can have an embedded policy with the same name, but very different contents. The list is de-duplicated, so if you have five users that have an inline policy with the same name, `inline_policy_names` will return only one name, not five.
+Array of strings. Each entry is the name of an embedded policy that is embedded in at least one matched user. Keep in
+mind that each user has a copy of a policy (which can then be modified). This means that two users can have an embedded
+policy with the same name, but very different contents. The list is de-duplicated, so if you have five users that have
+an inline policy with the same name, `inline_policy_names` will return only one name, not five.
 
     # Service users should have a bespoke policy
     describe aws_iam_users.where { username.start_with?('service') } do
@@ -212,7 +233,8 @@ Array of strings. Each entry is the name of an embedded policy that is embedded 
 
 ### usernames
 
-Array of strings. Each entry is the name of a user that matched. There will be exactly as many usernames here as there were users that matched, though it is possible to have non-unique usernames.
+Array of strings. Each entry is the name of a user that matched. There will be exactly as many usernames here as there
+were users that matched, though it is possible to have non-unique usernames.
 
     # 42 Users, including Bob, should have a password.
     describe aws_iam_users.where(has_console_password: true) do
@@ -222,14 +244,15 @@ Array of strings. Each entry is the name of a user that matched. There will be e
 
 ## Matchers
 
-This InSpec audit resource has the following resource-specific matchers.
-For a full list of available matchers, please visit our [universal matchers page](https://www.inspec.io/docs/reference/matchers/).
+This InSpec audit resource has the following resource-specific matchers. For a full list of available matchers, please
+visit our [universal matchers page](https://www.inspec.io/docs/reference/matchers/).
 
-As a plural resource, all matchers beginning with `have_` will return true if _any_ of the selected users match.
+As a plural resource, all matchers beginning with `have_` will return true if *any* of the selected users match.
 
 ### exist
 
-The test passes if the filtered user set is not empty. This basic matcher is frequently used with `should_not` to detect undesired conditions.
+The test passes if the filtered user set is not empty. This basic matcher is frequently used with `should_not` to detect
+undesired conditions.
 
     # Require MFA for everyone
     describe aws_iam_users.where(has_mfa_enabled: false) do
@@ -274,6 +297,9 @@ The test passes if at least one user in the filtered set has MFA enabled (virtua
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `iam:ListUsers`, `iam:GetLoginProfile`, `iam:ListMFADevices`, `iam:ListAccessKeys`, `iam:ListUserPolicies`, and `iam:ListAttachedUserPolicies` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `iam:ListUsers`, `iam:GetLoginProfile`, `iam:ListMFADevices`, `iam:ListAccessKeys`, `iam:ListUserPolicies`, and
+`iam:ListAttachedUserPolicies` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Identity And Access Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Identity And Access
+Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html).

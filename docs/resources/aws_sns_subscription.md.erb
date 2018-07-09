@@ -8,9 +8,21 @@ Use the `aws_sns_subscription` InSpec audit resource to test detailed properties
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.1.10 of InSpec.
+
 ## Syntax
 
-An `aws_sns_subscription` resource block uses resource parameters to search for a SNS Subscription, and then tests that subscriptions properties.  If no Subscriptions match, no error is raised, but the `exists` matcher will return `false` and all properties will be `nil`.
+An `aws_sns_subscription` resource block uses resource parameters to search for a SNS Subscription, and then tests that
+subscriptions properties. If no Subscriptions match, no error is raised, but the `exists` matcher will return `false`
+and all properties will be `nil`.
 
     describe aws_sns_subscription('arn:aws:sns:us-east-1::test-topic-01:b214aff5-a2c7-438f-a753-8494493f2ff6') do
       it { should exist }
@@ -38,7 +50,7 @@ The ARN (Amazon Resource Name) of the AWS SNS Subscription.
     describe aws_sns_subscription(subscription_arn: 'arn:aws:sns:us-east-1::test-topic-01:b214aff5-a2c7-438f-a753-8494493f2ff6') do
       it { should exist }
     end
-
+    
     # Or omit hash syntax, rely on it being the default parameter
     describe aws_sns_subscription('arn:aws:sns:us-east-1::test-topic-01:b214aff5-a2c7-438f-a753-8494493f2ff6') do
       it { should exist }
@@ -50,13 +62,14 @@ The ARN (Amazon Resource Name) of the AWS SNS Subscription.
 
 ### exists
 
-The control will pass if the specified Aws Subscription was found.  Use should_not if you want to verify that the specified Subscription does not exist.
+The control will pass if the specified Aws Subscription was found. Use should\_not if you want to verify that the
+specified Subscription does not exist.
 
     # Test that a specific subscription exists.
     describe aws_sns_subscription(subscription_arn: 'arn:aws:sns:us-east-1::test-topic-01:b214aff5-a2c7-438f-a753-8494493f2ff6')
       it { should exist }
     end
-
+    
     # Test that a Subscription does not exist.
     describe aws_sns_subscription(subscription_arn: 'arn:aws:sns:us-east-1::NOGOOD:b214aff5-a2c7-438f-a753-8494493f2ff6')
       it { should_not exist }
@@ -64,7 +77,8 @@ The control will pass if the specified Aws Subscription was found.  Use should_n
 
 ### be\_confirmation\_authenticated
 
-Provides whether or not the subscription confirmation request was authenticated.
+Provides whether or not the subscription confirmation request was
+    authenticated.
 
     describe aws_sns_subscription(subscription_arn: 'arn:aws:sns:us-east-1::NOGOOD:b214aff5-a2c7-438f-a753-8494493f2ff6')
       it { should be_confirmation_authenticated }
@@ -72,7 +86,8 @@ Provides whether or not the subscription confirmation request was authenticated.
 
 ### have\_raw\_message\_delivery
 
-Provides whether or not the original message is passed as is, not formatted as a json or yaml.
+Provides whether or not the original message is passed as is, not formatted as a json or
+    yaml.
 
     describe aws_sns_subscription(subscription_arn: 'arn:aws:sns:us-east-1::NOGOOD:b214aff5-a2c7-438f-a753-8494493f2ff6')
       it { should have_raw_message_delivery }
@@ -107,7 +122,8 @@ Provides the AWS Owners ID.
 
 ### protocol
 
-Provides the Subscriptions protocol used. For example http, https, email, email-json, sqs, etc.  For more information about protocols please visit https://docs.aws.amazon.com/sns/latest/api/API_Subscribe.html
+Provides the Subscriptions protocol used. For example http, https, email, email-json, sqs, etc. For more information
+about protocols please visit https://docs.aws.amazon.com/sns/latest/api/API\_Subscribe.html
 
     # Inspect the endpoint
     describe aws_sns_subscription(subscription_arn: 'arn:aws:sns:us-east-1::test-topic-01:b214aff5-a2c7-438f-a753-8494493f2ff6' ) do
@@ -125,6 +141,8 @@ Provides the SNS Topic arn that the Subscription is associated with.
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `sns:GetSubscriptionAttributes` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `sns:GetSubscriptionAttributes` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon SNS](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonsns.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon
+SNS](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonsns.html).

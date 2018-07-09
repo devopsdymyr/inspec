@@ -3,11 +3,23 @@ title: About the grub_conf Resource
 platform: linux
 ---
 
-# grub_conf
+# grub\_conf
 
-Grub is a boot loader on the Linux platform used to load and then transfer control to an operating system kernel, after which that kernel initializes the rest of the operating system. Use the `grub_conf` InSpec audit resource to test boot loader configuration settings that are defined in the `grub.conf` configuration file.
+Grub is a boot loader on the Linux platform used to load and then transfer control to an operating system kernel, after
+which that kernel initializes the rest of the operating system. Use the `grub_conf` InSpec audit resource to test boot
+loader configuration settings that are defined in the `grub.conf` configuration file.
 
 <br>
+
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v1.0.0 of InSpec.
 
 ## Syntax
 
@@ -26,10 +38,12 @@ or:
 
 where
 
-* `'service_name'` is a service listed in the `grub.conf` file
-* `'path'` is the path to the `grub.conf` file
-* `'kernel'` specifies the default kernel (by using `'default'`) or a specific kernel; `'default'` defines the position in the list of kernels at which the default kernel is defined, i.e. `should eq '0'` for the first kernel listed or `'path', 'default'` to use the default kernel as specified in the `grub.conf` file
-* `'value'` is the value that is expected
+  - `'service_name'` is a service listed in the `grub.conf` file
+  - `'path'` is the path to the `grub.conf` file
+  - `'kernel'` specifies the default kernel (by using `'default'`) or a specific kernel; `'default'` defines the
+    position in the list of kernels at which the default kernel is defined, i.e. `should eq '0'` for the first kernel
+    listed or `'path', 'default'` to use the default kernel as specified in the `grub.conf` file
+  - `'value'` is the value that is expected
 
 <br>
 
@@ -62,9 +76,11 @@ A Grub configuration file located at `/etc/grub.conf` is similar to the followin
         kernel /vmlinuz-2.6.32-358.14.1.el6.x86_64 ro root=/dev/hda6 ramdisk_size=400000
         initrd /initrd-2.6.32-358.14.1.el6.x86_64.img
 
-This file defines two versions of RedHat Enterprise Linux, with version `2.6.32-573.7.1.el6.x86_64` specified as the default.
+This file defines two versions of RedHat Enterprise Linux, with version `2.6.32-573.7.1.el6.x86_64` specified as the
+default.
 
-The following test verifies the kernel, ensures that kernel is the default kernel, its initial RAM disk (`initrd`), and the timeout:
+The following test verifies the kernel, ensures that kernel is the default kernel, its initial RAM disk (`initrd`), and
+the timeout:
 
     describe grub_conf('/etc/grub.conf',  'default') do
       its('kernel') { should include '/vmlinuz-2.6.32-573.7.1.el6.x86_64' }

@@ -5,15 +5,29 @@ platform: aws
 
 # aws\_cloudwatch\_log\_metric\_filter
 
-Use the `aws_cloudwatch_log_metric_filter` InSpec audit resource to search for and test properties of individual AWS Cloudwatch Log Metric Filters.
+Use the `aws_cloudwatch_log_metric_filter` InSpec audit resource to search for and test properties of individual AWS
+Cloudwatch Log Metric Filters.
 
-A Log Metric Filter (LMF) is an AWS resource that observes log traffic, looks for a specified pattern, and then updates a metric about the number times the match occurs.  The metric can also be connected to AWS Cloudwatch Alarms, so that actions can be taken when a match occurs.
+A Log Metric Filter (LMF) is an AWS resource that observes log traffic, looks for a specified pattern, and then updates
+a metric about the number times the match occurs. The metric can also be connected to AWS Cloudwatch Alarms, so that
+actions can be taken when a match occurs.
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
+
 ## Syntax
 
-An `aws_cloudwatch_log_metric_filter` resource block searches for an LMF, specified by several search options.  If more than one log metric filter matches, an error occurs.
+An `aws_cloudwatch_log_metric_filter` resource block searches for an LMF, specified by several search options. If more
+than one log metric filter matches, an error occurs.
 
     # Look for an LMF by its filter name and log group name.  This combination
     # will always either find at most one LMF - no duplicates.
@@ -23,7 +37,7 @@ An `aws_cloudwatch_log_metric_filter` resource block searches for an LMF, specif
     ) do
       it { should exist }
     end
-
+    
     # Search for an LMF by pattern and log group.
     # This could result in an error if the results are not unique.
     describe aws_cloudwatch_log_metric_filter(
@@ -37,7 +51,7 @@ An `aws_cloudwatch_log_metric_filter` resource block searches for an LMF, specif
 
 ## Filter Attributes
 
-* `filter_name`, `log_group_name`, `pattern`
+  - `filter_name`, `log_group_name`, `pattern`
 
 <br>
 
@@ -45,7 +59,8 @@ An `aws_cloudwatch_log_metric_filter` resource block searches for an LMF, specif
 
 ### filter\_name
 
-This is the identifier of the log metric filter within its log group.  To ensure you have a unique result, you must also provide the `log_group_name`.
+This is the identifier of the log metric filter within its log group. To ensure you have a unique result, you must also
+provide the `log_group_name`.
 
     describe aws_cloudwatch_log_metric_filter(
       filter_name: 'my-filter'
@@ -55,7 +70,8 @@ This is the identifier of the log metric filter within its log group.  To ensure
 
 ### log\_group\_name
 
-The name of the Cloudwatch Log Group that the LMF is watching.  Together with `filter_name`, this uniquely identifies an LMF.
+The name of the Cloudwatch Log Group that the LMF is watching. Together with `filter_name`, this uniquely identifies an
+LMF.
 
     describe aws_cloudwatch_log_metric_filter(
       log_group_name: 'my-log-group',
@@ -77,7 +93,7 @@ The filter pattern used to match entries from the logs in the log group.
 
 ## Properties
 
-* `filter_name`, `log_group_name`,` metric_name`, `metric_namespace`, `pattern`
+  - `filter_name`, `log_group_name`,`metric_name`, `metric_namespace`, `pattern`
 
 <br>
 
@@ -108,7 +124,8 @@ The name of the log group that the LMF is watching.
 
 ### metric\_name, metric\_namespace
 
-The name and namespace of the Cloudwatch Metric that will be updated when the LMF matches.  You also need the `metric_namespace` to uniquely identify the metric.
+The name and namespace of the Cloudwatch Metric that will be updated when the LMF matches. You also need the
+`metric_namespace` to uniquely identify the metric.
 
     # Ensure that the LMF has the right metric name
     describe aws_cloudwatch_log_metric_filter(
@@ -135,7 +152,8 @@ The pattern used to match entries from the logs in the log group.
 
 ## Matchers
 
-This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our [matchers page](https://www.inspec.io/docs/reference/matchers/).
+This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our
+[matchers page](https://www.inspec.io/docs/reference/matchers/).
 
 ### exist
 
@@ -149,6 +167,8 @@ Matches (i.e., passes the test) if the resource parameters (search criteria) wer
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `cloudwatch:DescribeAlarmsForMetric` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `cloudwatch:DescribeAlarmsForMetric` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon CloudWatch](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazoncloudwatch.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon
+CloudWatch](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazoncloudwatch.html).

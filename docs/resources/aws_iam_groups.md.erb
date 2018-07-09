@@ -11,9 +11,20 @@ To test properties of a single group, use the `aws_iam_group` resource.
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
+
 ## Syntax
 
-An `aws_iam_groups` resource block uses an optional filter to select a collection of IAM groups and then tests that collection.
+An `aws_iam_groups` resource block uses an optional filter to select a collection of IAM groups and then tests that
+collection.
 
     # The control will pass if the filter returns at least one result. Use `should_not` if you expect zero matches.
     describe aws_iam_groups do
@@ -32,9 +43,10 @@ As this is the initial release of `aws_iam_groups`, its limited functionality pr
 
 ## Filter Criteria
 
-### group_name
+### group\_name
 
-Filters the IAM groups by their group name, a string.  If you know the exact group name, use `aws_iam_group` (singular) instead.  This criteria may be used when you know a pattern of the name.
+Filters the IAM groups by their group name, a string. If you know the exact group name, use `aws_iam_group` (singular)
+instead. This criteria may be used when you know a pattern of the name.
 
     # Use a regex to find groups ending with 'Admins'
     describe aws_iam_groups.where(group_name: /Admins$/) do
@@ -44,16 +56,17 @@ Filters the IAM groups by their group name, a string.  If you know the exact gro
 
 ## Properties
 
-### group_names
+### group\_names
 
-An Array of Strings, reflecting the IAM group names matched by the filter.  If no groups matched, this will be empty.  You can also use this with `aws_iam_group` to enumerate groups.
+An Array of Strings, reflecting the IAM group names matched by the filter. If no groups matched, this will be empty. You
+can also use this with `aws_iam_group` to enumerate groups.
 
     # Check for friendly people
     describe aws_iam_groups.where(group_name: /Admins$/) do
       its('group_names') { should include 'FriendlyAdmins' }
       its('group_names') { should include 'KindAdmins' }
     end
-
+    
     # Use to loop and fetch groups individually for auditing in detail
     # Without a `where`, this fetches all groups
     aws_iam_groups.group_names.each do |group_names|
@@ -65,7 +78,8 @@ An Array of Strings, reflecting the IAM group names matched by the filter.  If n
 
 ## Matchers
 
-This resource has no resource-specific matchers.  For a full list of available matchers, please visit our [Universal Matchers page](https://www.inspec.io/docs/reference/matchers/).
+This resource has no resource-specific matchers. For a full list of available matchers, please visit our [Universal
+Matchers page](https://www.inspec.io/docs/reference/matchers/).
 
 ### exists
 
@@ -77,6 +91,8 @@ The control will pass if the filter returns at least one result. Use `should_not
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `iam:ListGroups` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `iam:ListGroups` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Identity And Access Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Identity And Access
+Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html).

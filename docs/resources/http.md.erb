@@ -9,9 +9,20 @@ Use the `http` InSpec audit resource to test an http endpoint.
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v1.10.0 of InSpec.
+
 ## Syntax
 
-An `http` resource block declares the configuration settings to be tested:
+An `http` resource block declares the configuration settings to be
+    tested:
 
     describe http('url', auth: {user: 'user', pass: 'test'}, params: {params}, method: 'method', headers: {headers}, data: data, open_timeout: 60, read_timeout: 60, ssl_verify: true) do
       its('status') { should eq number }
@@ -21,21 +32,22 @@ An `http` resource block declares the configuration settings to be tested:
 
 where
 
-* `('url')` is the url to test
-* `auth: { user: 'user', pass: 'test' }` may be specified for basic auth request
-* `{params}` may be specified for http request parameters
-* `'method'` may be specified for http request method (default to 'GET')
-* `{headers}` may be specified for http request headers
-* `data` may be specified for http request body
-* `open_timeout` may be specified for a timeout for opening connections (default to 60)
-* `read_timeout` may be specified for a timeout for reading connections (default to 60)
-* `ssl_verify` may be specified to enable or disable verification of SSL certificates (default to `true`)
+  - `('url')` is the url to test
+  - `auth: { user: 'user', pass: 'test' }` may be specified for basic auth request
+  - `{params}` may be specified for http request parameters
+  - `'method'` may be specified for http request method (default to 'GET')
+  - `{headers}` may be specified for http request headers
+  - `data` may be specified for http request body
+  - `open_timeout` may be specified for a timeout for opening connections (default to 60)
+  - `read_timeout` may be specified for a timeout for reading connections (default to 60)
+  - `ssl_verify` may be specified to enable or disable verification of SSL certificates (default to `true`)
 
 <br>
 
 ## Example
 
-The following examples show how to use this InSpec audit resource. An `http` resource block declares the configuration settings to be tested:
+The following examples show how to use this InSpec audit resource. An `http` resource block declares the configuration
+settings to be tested:
 
 ### Simple http test
 
@@ -74,7 +86,7 @@ In InSpec 2.0, the HTTP test will automatically execute remotely whenever InSpec
 
 ## Parameters
 
-* `url`, `auth`, `params`, `method`, `headers`, `data`, `open_timeout`, `read_timeout`, `ssl_verify`
+  - `url`, `auth`, `params`, `method`, `headers`, `data`, `open_timeout`, `read_timeout`, `ssl_verify`
 
 ## Parameter Examples
 
@@ -126,12 +138,14 @@ In InSpec 2.0, the HTTP test will automatically execute remotely whenever InSpec
 
 `data` may be specified for http request body.
 
-        describe http('http://localhost:8080/ping',
-                  data: '{"data":{"a":"1","b":"five"}}') do
-          ...
-        end
+``` 
+    describe http('http://localhost:8080/ping',
+              data: '{"data":{"a":"1","b":"five"}}') do
+      ...
+    end
+```
 
-### open_timeout
+### open\_timeout
 
 `open_timeout` may be specified for a timeout for opening connections (default to 60).
 
@@ -140,7 +154,7 @@ In InSpec 2.0, the HTTP test will automatically execute remotely whenever InSpec
       ...
     end
 
-### read_timeout
+### read\_timeout
 
 `read_timeout` may be specified for a timeout for reading connections (default to 60).
 
@@ -149,7 +163,7 @@ In InSpec 2.0, the HTTP test will automatically execute remotely whenever InSpec
       ...
     end
 
-### ssl_verify
+### ssl\_verify
 
 `ssl_verify` may be specified to enable or disable verification of SSL certificates (default to `true`).
 
@@ -162,7 +176,7 @@ In InSpec 2.0, the HTTP test will automatically execute remotely whenever InSpec
 
 ## Properties
 
-* `body`, `headers`, `http_method`, `status`,
+  - `body`, `headers`, `http_method`, `status`,
 
 <br>
 

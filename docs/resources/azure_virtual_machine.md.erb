@@ -7,6 +7,16 @@ platform: azure
 
 Use the `azure_virtual_machine` InSpec audit resource to ensure that a Virtual Machine has been provisioned correctly.
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
+
 ## Syntax
 
 The name of the machine and the resource group are required as properties to the resource.
@@ -17,10 +27,10 @@ The name of the machine and the resource group are required as properties to the
 
 where
 
-* `MyVm` is the name of the virtual machine as seen in Azure; it is **not** the hostname of the machine
-* `MyResourceGroup` is the name of the machine's resource group
-* `property` is one of the resource properties
-* `value` is the expected output from the matcher
+  - `MyVm` is the name of the virtual machine as seen in Azure; it is **not** the hostname of the machine
+  - `MyResourceGroup` is the name of the machine's resource group
+  - `property` is one of the resource properties
+  - `value` is the expected output from the matcher
 
 ## Examples
 
@@ -36,13 +46,13 @@ The following examples show to use this InSpec audit resource.
 
 ## Parameters
 
-* `group_name`, `name`, `apiversion`
+  - `group_name`, `name`, `apiversion`
 
 ## Parameter Examples
 
 The options that can be passed to the resource are as follows.
 
-### group_name (required)
+### group\_name (required)
 
 Use this parameter to define the Azure Resource Group to be tested.
 
@@ -60,7 +70,8 @@ Use this parameter to define the name of the Azure resource to test.
 
 ### apiversion
 
-The API Version to use when querying the resource. Defaults to the latest version for the resource.
+The API Version to use when querying the resource. Defaults to the latest version for the
+    resource.
 
     describe azure_virtual_machine_data_disk(group_name: 'InSpec-Azure', name: 'Windows-Internal-VM', apiversion: '2.0') do
         ...
@@ -68,9 +79,9 @@ The API Version to use when querying the resource. Defaults to the latest versio
 
 These options can also be set using the environment variables:
 
-* `AZURE_RESOURCE_GROUP_NAME`
-* `AZURE_RESOURCE_NAME`
-* `AZURE_RESOURCE_API_VERSION`
+  - `AZURE_RESOURCE_GROUP_NAME`
+  - `AZURE_RESOURCE_NAME`
+  - `AZURE_RESOURCE_API_VERSION`
 
 When the options have been set as well as the environment variables, the environment variables take priority.
 
@@ -78,7 +89,11 @@ When the options have been set as well as the environment variables, the environ
 
 ## Properties
 
-* `type`, `location`, `name`, `publisher`, `offer`, `sku`, `os_type`, `os_disk_name`, `have_managed_osdisk`, `caching`, `create_option`, `disk_size_gb`, `have_data_disks`, `data_disk_count`  , `storage_account_type`, `vm_size`, `computer_name`, `admin_username`, `have_nics`, `nic_count`, `connected_nics`, `have_password_authentication`, `password_authentication?`, `have_custom_data`, `custom_data?`, `have_ssh_keys`, `ssh_keys?`, `ssh_key_count`, `ssh_keys`, `have_boot_diagnostics`, `boot_diagnostics_storage_uri`
+  - `type`, `location`, `name`, `publisher`, `offer`, `sku`, `os_type`, `os_disk_name`, `have_managed_osdisk`,
+    `caching`, `create_option`, `disk_size_gb`, `have_data_disks`, `data_disk_count` , `storage_account_type`,
+    `vm_size`, `computer_name`, `admin_username`, `have_nics`, `nic_count`, `connected_nics`,
+    `have_password_authentication`, `password_authentication?`, `have_custom_data`, `custom_data?`, `have_ssh_keys`,
+    `ssh_keys?`, `ssh_key_count`, `ssh_keys`, `have_boot_diagnostics`, `boot_diagnostics_storage_uri`
 
 <br>
 
@@ -100,7 +115,8 @@ Where the machine is located
 
 ### name
 
-Name of the Virtual Machine in Azure. Be aware that this is not the computer name or hostname, rather the name of the machine when seen in the Azure Portal.
+Name of the Virtual Machine in Azure. Be aware that this is not the computer name or hostname, rather the name of the
+machine when seen in the Azure Portal.
 
     its('name') { should cmp 'InSpec-Azure' }
 
@@ -108,7 +124,7 @@ Name of the Virtual Machine in Azure. Be aware that this is not the computer nam
 
 The publisher of this machine's build image.
 
- `nil` if the machine was created from a custom image.
+`nil` if the machine was created from a custom image.
 
     its('publisher') { should cmp 'MicrosoftWindowsServer' }
 
@@ -132,7 +148,9 @@ The item from the publisher that was used to create the image.
 
 Test that returns the classification in Azure of the operating system type. Usually either `Linux` or `Windows`.
 
-        its('os_type') { should cmp 'Windows' }
+``` 
+    its('os_type') { should cmp 'Windows' }
+```
 
 ### os\_disk\_name
 
@@ -148,7 +166,8 @@ Returns the type of caching that has been set on the operating system disk.
 
 ### create\_option
 
-When the operating system disk is created, how it was created is set as a property. This property returns how the disk was created.
+When the operating system disk is created, how it was created is set as a property. This property returns how the disk
+was created.
 
     its('create_option') { should cmp 'FromImage' }
 
@@ -176,7 +195,8 @@ The size of the machine in Azure
 
 ### computer\_name
 
-The name of the machine. This is what was assigned to the machine during deployment and is what _should_ be returned by the `hostname` command.
+The name of the machine. This is what was assigned to the machine during deployment and is what *should* be returned by
+the `hostname` command.
 
     its('computer_name') { should cmp 'win-internal-1' }
 
@@ -196,13 +216,17 @@ The number of network interface cards that have been attached to the machine
 
 ### connected\_nics
 
-This returns an array of the NIC ids that are connected to the machine. This means that it possible to check that the machine has the correct NIC(s) attached and thus on the correct subnet.
+This returns an array of the NIC ids that are connected to the machine. This means that it possible to check that the
+machine has the correct NIC(s) attached and thus on the correct subnet.
 
     its('connected_nics') { should include /Inspec-NIC-1/ }
 
-Note the use of the regular expression here. This is because the NIC id is a long string that contains the subscription id, resource group, machine id as well as other things. By using the regular expression the NIC can be checked without breaking this string up. It also means that other tests can be performed.
+Note the use of the regular expression here. This is because the NIC id is a long string that contains the subscription
+id, resource group, machine id as well as other things. By using the regular expression the NIC can be checked without
+breaking this string up. It also means that other tests can be performed.
 
-An example of the id string is `/subscriptions/1e0b427a-d58b-494e-ae4f-ee558463ebbf/resourceGroups/Inspec-Azure/providers/Microsoft.Network/networkInterfaces/Inspec-NIC-1`
+An example of the id string is
+`/subscriptions/1e0b427a-d58b-494e-ae4f-ee558463ebbf/resourceGroups/Inspec-Azure/providers/Microsoft.Network/networkInterfaces/Inspec-NIC-1`
 
 ### password\_authentication?
 
@@ -224,7 +248,7 @@ Boolean to state of the machine is accessible using SSH keys
 
     its('ssh_keys?') { should be true }
 
-### ssh\_key\_count
+\#\#\# ssh\_key\_count
 
 Returns how many SSH keys have been applied to the machine.
 
@@ -242,7 +266,8 @@ Most SSH public keys have a signature at the end of them that can be tested. For
 
 ### boot\_diagnostics\_storage\_uri
 
-If boot diagnostics are enabled for the machine they will be saved in a storage account. This method returns the URI for the storage account.
+If boot diagnostics are enabled for the machine they will be saved in a storage account. This method returns the URI for
+the storage account.
 
     its('boot_diagnostics_storage_uri') { should match 'ghjgjhgjg' }
 
@@ -252,7 +277,8 @@ If boot diagnostics are enabled for the machine they will be saved in a storage 
 
 There are a number of built in comparison operators that are available to test the result with an expected value.
 
-For information on all that are available please refer to the [Inspec Matchers Reference](https://www.inspec.io/docs/reference/matchers/) page.
+For information on all that are available please refer to the [Inspec Matchers
+Reference](https://www.inspec.io/docs/reference/matchers/) page.
 
 ### boot\_diagnostics?
 
@@ -306,7 +332,8 @@ For a Windows machine this will always be false.
 
 ## Tags
 
-It is possible to test the tags that have been assigned to the resource. There are a number of properties that can be called to check that it has tags, that it has the correct number and that the correct ones are assigned.
+It is possible to test the tags that have been assigned to the resource. There are a number of properties that can be
+called to check that it has tags, that it has the correct number and that the correct ones are assigned.
 
 ### have\_tags
 
@@ -332,7 +359,7 @@ To get the value of the tag, a number of tests have been created from the tags t
 
 For example, if the following tag is set on a resource:
 
-* owner: J.G. Jingleheimerschmidt
+  - owner: J.G. Jingleheimerschmidt
 
 Then a test is available called `Owner_tag`.
 
@@ -342,6 +369,9 @@ Note: The tag name is case sensitive which makes the test case sensitive. E.g. `
 
 ## References
 
-* [Azure Ruby SDK - Resources](https://github.com/Azure/azure-sdk-for-ruby/tree/master/management/azure_mgmt_resources)
-* [Virtual Machine External VM](https://github.com/chef/inspec/blob/fc990346f2438690f0ac36a9f6606e61574a79b8/test/azure/verify/controls/virtual_machine_external_vm.rb)
-* [Virtual Machine Internal VM](https://github.com/chef/inspec/blob/fc990346f2438690f0ac36a9f6606e61574a79b8/test/azure/verify/controls/virtual_machine_internal_vm.rb)
+  - [Azure Ruby SDK -
+    Resources](https://github.com/Azure/azure-sdk-for-ruby/tree/master/management/azure_mgmt_resources)
+  - [Virtual Machine External
+    VM](https://github.com/chef/inspec/blob/fc990346f2438690f0ac36a9f6606e61574a79b8/test/azure/verify/controls/virtual_machine_external_vm.rb)
+  - [Virtual Machine Internal
+    VM](https://github.com/chef/inspec/blob/fc990346f2438690f0ac36a9f6606e61574a79b8/test/azure/verify/controls/virtual_machine_internal_vm.rb)

@@ -10,6 +10,16 @@ Use the `aws_s3_bucket` InSpec audit resource to perform in-depth auditing of a 
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.1.30 of InSpec.
+
 ## Syntax
 
 An `aws_s3_buckets` resource block takes no arguments
@@ -54,6 +64,8 @@ Provides an array of strings containing the names of the buckets.
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `s3:ListAllMyBuckets` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `s3:ListAllMyBuckets` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon S3](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazons3.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon
+S3](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazons3.html).

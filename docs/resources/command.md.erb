@@ -9,9 +9,20 @@ Use the `command` InSpec audit resource to test an arbitrary command that is run
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v1.0.0 of InSpec.
+
 ## Syntax
 
-A `command` resource block declares a command to be run, one (or more) expected values, and the location to which that output is sent:
+A `command` resource block declares a command to be run, one (or more) expected values, and the location to which that
+output is sent:
 
     describe command('command') do
       it { should exist }
@@ -20,9 +31,9 @@ A `command` resource block declares a command to be run, one (or more) expected 
 
 where
 
-* `'command'` must specify a command to be run
-* `'property'` is one of `exit_status`, `stderr`, or `stdout`
-* `'output'` tests the output of the command run on the system versus the output value stated in the test
+  - `'command'` must specify a command to be run
+  - `'property'` is one of `exit_status`, `stderr`, or `stdout`
+  - `'output'` tests the output of the command run on the system versus the output value stated in the test
 
 <br>
 
@@ -30,7 +41,7 @@ where
 
 The following examples show how to use this InSpec audit resource.
 
-### exit_status
+### exit\_status
 
 The `exit_status` property tests the exit status for the command:
 
@@ -44,7 +55,8 @@ The `stderr` property tests results of the command as returned in standard error
 
 ### stdout
 
-The `stdout` property tests results of the command as returned in standard output (stdout). The following example shows matching output using a regular expression:
+The `stdout` property tests results of the command as returned in standard output (stdout). The following example shows
+matching output using a regular expression:
 
     describe command('echo 1') do
        its('stdout') { should match (/[0-9]/) }
@@ -96,23 +108,26 @@ The `stdout` property tests results of the command as returned in standard outpu
 
 ### Verify NTP
 
-The following example shows how to use the `file` audit resource to verify if the `ntp.conf` and `leap-seconds` files are present, and then the `command` resource to verify if NTP is installed and running:
+The following example shows how to use the `file` audit resource to verify if the `ntp.conf` and `leap-seconds` files
+are present, and then the `command` resource to verify if NTP is installed and running:
 
     describe file('/etc/ntp.conf') do
        it { should be_file }
     end
-
+    
     describe file('/etc/ntp.leapseconds') do
       it { should be_file }
     end
-
+    
     describe command('pgrep ntp') do
        its('exit_status') { should eq 0 }
     end
 
 ### Verify WiX
 
-Wix includes several tools -- such as `candle` (preprocesses and compiles source files into object files), `light` (links and binds object files to an installer database), and `heat` (harvests files from various input formats). The following example uses a whitespace array and the `file` audit resource to verify if these three tools are present:
+Wix includes several tools -- such as `candle` (preprocesses and compiles source files into object files), `light`
+(links and binds object files to an installer database), and `heat` (harvests files from various input formats). The
+following example uses a whitespace array and the `file` audit resource to verify if these three tools are present:
 
     %w(
       candle.exe
@@ -135,4 +150,3 @@ For a full list of available matchers, please visit our [matchers page](https://
 The `exist` matcher tests if a command may be run on the system:
 
     it { should exist }
-

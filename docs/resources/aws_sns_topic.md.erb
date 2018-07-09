@@ -4,9 +4,21 @@ title: About the aws_sns_topic Resource
 
 # aws\_sns\_topic
 
-Use the `aws_sns_topic` InSpec audit resource to test properties of a single AWS Simple Notification Service Topic.  SNS topics are channels for related events. AWS resources place events in the SNS topic, while other AWS resources _subscribe_ to receive notifications when new events have appeared.
+Use the `aws_sns_topic` InSpec audit resource to test properties of a single AWS Simple Notification Service Topic. SNS
+topics are channels for related events. AWS resources place events in the SNS topic, while other AWS resources
+*subscribe* to receive notifications when new events have appeared.
 
 <br>
+
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
 
 ## Syntax
 
@@ -15,7 +27,7 @@ Use the `aws_sns_topic` InSpec audit resource to test properties of a single AWS
       it { should exist }
       its('confirmed_subscription_count') { should_not be_zero }
     end
-
+    
     # You may also use has syntax to pass the ARN
     describe aws_sns_topic(arn: 'arn:aws:sns:*::my-topic-name') do
       it { should exist }
@@ -25,7 +37,9 @@ Use the `aws_sns_topic` InSpec audit resource to test properties of a single AWS
 
 ### ARN
 
-This resource expects a single parameter that uniquely identifies the SNS Topic, an ARN. Amazon Resource Names for SNS topics have the format `arn:aws:sns:region:account-id:topicname`.  AWS requires a fully-specified ARN for looking up an SNS topic.  The account ID and region are required.  Wildcards are not permitted.
+This resource expects a single parameter that uniquely identifies the SNS Topic, an ARN. Amazon Resource Names for SNS
+topics have the format `arn:aws:sns:region:account-id:topicname`. AWS requires a fully-specified ARN for looking up an
+SNS topic. The account ID and region are required. Wildcards are not permitted.
 
 See also the [AWS documentation on ARNs](http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html).
 
@@ -46,17 +60,18 @@ An integer indicating the number of currently active subscriptions.
 
 ## Matchers
 
-This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our [matchers page](https://www.inspec.io/docs/reference/matchers/).
+This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our
+[matchers page](https://www.inspec.io/docs/reference/matchers/).
 
 ### exist
 
-Indicates that the ARN provided was found.  Use `should_not` to test for SNS topics that should not exist.
+Indicates that the ARN provided was found. Use `should_not` to test for SNS topics that should not exist.
 
     # Expect good news
     describe aws_sns_topic('arn:aws:sns:*::good-news') do
       it { should exist }
     end
-
+    
     # No bad news allowed
     describe aws_sns_topic('arn:aws:sns:*::bad-news') do
       it { should_not exist }
@@ -64,6 +79,8 @@ Indicates that the ARN provided was found.  Use `should_not` to test for SNS top
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `sns:GetTopicAttributes` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `sns:GetTopicAttributes` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon SNS](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonsns.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Amazon
+SNS](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonsns.html).

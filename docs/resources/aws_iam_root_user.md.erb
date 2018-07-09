@@ -13,6 +13,16 @@ To test properties of a specific AWS user use the `aws_iam_user` resource.
 
 <br>
 
+## Availability
+
+### Installation
+
+This resource is distributed along with InSpec itself. You can use it automatically.
+
+### Version
+
+This resource first became available in v2.0.16 of InSpec.
+
 ## Syntax
 
 An `aws_iam_root_user` resource block requires no parameters but has several matchers.
@@ -43,23 +53,27 @@ The following examples show how to use this InSpec audit resource.
 
 ## Matchers
 
-This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our [matchers page](https://www.inspec.io/docs/reference/matchers/).
+This InSpec audit resource has the following special matchers. For a full list of available matchers, please visit our
+[matchers page](https://www.inspec.io/docs/reference/matchers/).
 
 ### have\_mfa\_enabled
 
-The `have_mfa_enabled` matcher tests if the AWS root user has Multi-Factor Authentication enabled, requiring them to enter a secondary code when they login to the web console.
+The `have_mfa_enabled` matcher tests if the AWS root user has Multi-Factor Authentication enabled, requiring them to
+enter a secondary code when they login to the web console.
 
     it { should have_mfa_enabled }
 
 ### have\_hardware\_mfa\_enabled
 
-The `have_hardware_mfa_enabled` matcher tests if the AWS root user has Hardware Multi-Factor Authentication device enabled, requiring them to enter a secondary code when they login to the web console.
+The `have_hardware_mfa_enabled` matcher tests if the AWS root user has Hardware Multi-Factor Authentication device
+enabled, requiring them to enter a secondary code when they login to the web console.
 
     it { should have_hardware_mfa_enabled }
 
 ### have\_virtual\_mfa\_enabled
 
-The `have_virtual_mfa_enabled` matcher tests if the AWS root user has Virtual Multi-Factor Authentication device enabled, requiring them to enter a secondary code when they login to the web console.
+The `have_virtual_mfa_enabled` matcher tests if the AWS root user has Virtual Multi-Factor Authentication device
+enabled, requiring them to enter a secondary code when they login to the web console.
 
     it { should have_virtual_mfa_enabled }
 
@@ -71,6 +85,8 @@ The `have_access_key` matcher tests if the AWS root user has at least one access
 
 ## AWS Permissions
 
-Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will need the `iam:GetAccountSummary` action with Effect set to Allow.
+Your [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-principal) will
+need the `iam:GetAccountSummary` action with Effect set to Allow.
 
-You can find detailed documentation at [Actions, Resources, and Condition Keys for Identity And Access Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html).
+You can find detailed documentation at [Actions, Resources, and Condition Keys for Identity And Access
+Management](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_identityandaccessmanagement.html).
